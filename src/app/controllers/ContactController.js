@@ -12,28 +12,24 @@ class ContactController {
     const contact = await ContactRepository.findById(id);
 
     if (!contact) {
-      return response
-        .status(404) // 404: Not Found
-        .json({ error: 'User not found' });
+      return response.status(404).json({ error: 'Contact not found' });
     }
 
-    response.json(contact);
+    response.status(201).json(contact);
   }
 
   async store(request, response) {
     const { name, email, phone, category_id } = request.body;
 
     if (!name) {
-      return response
-        .status(400) // 400: Bad Request
-        .json({ error: 'Name is required' });
+      return response.status(400).json({ error: 'Name is required' });
     }
 
     const contactExists = await ContactRepository.findByEmail(email);
 
     if (contactExists) {
       return response
-        .status(400) // 400: Bad Request
+        .status(400)
         .json({ error: 'This e-mail is already in use' });
     }
 
@@ -54,20 +50,18 @@ class ContactController {
     const contactExists = await ContactRepository.findById(id);
 
     if (!contactExists) {
-      response.status(404).json({ error: 'User not found' });
+      response.status(404).json({ error: 'Contact not found' });
     }
 
     if (!name) {
-      return response
-        .status(400) // 400: Bad Request
-        .json({ error: 'Name is required' });
+      return response.status(400).json({ error: 'Name is required' });
     }
 
     const contactByEmail = await ContactRepository.findByEmail(email);
 
     if (contactByEmail && contactByEmail.id !== id) {
       return response
-        .status(400) // 400: Bad Request
+        .status(400)
         .json({ error: 'This e-mail is already in use' });
     }
 
@@ -84,7 +78,7 @@ class ContactController {
   async delete(request, response) {
     const { id } = request.params;
     await ContactRepository.delete(id);
-    response.sendStatus(204); // 204: No Content
+    response.sendStatus(204);
   }
 }
 

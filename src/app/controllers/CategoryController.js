@@ -12,9 +12,7 @@ class CategoryController {
     const category = await CategoryRepository.findById(id);
 
     if (!category) {
-      return response
-        .status(404) // 404: Not found
-        .json({ error: 'Category not found' });
+      return response.status(404).json({ error: 'Category not found' });
     }
 
     response.json(category);
@@ -24,21 +22,19 @@ class CategoryController {
     const { name } = request.body;
 
     if (!name) {
-      return response
-        .status(400) // 400: Bad request
-        .json({ error: 'Name is required' });
+      return response.status(400).json({ error: 'Name is required' });
     }
 
     const categoryExists = await CategoryRepository.findByName(name);
 
     if (categoryExists) {
       return response
-        .status(400) // 400: Bad request
+        .status(400)
         .json({ error: 'This category already exists' });
     }
 
     const category = await CategoryRepository.create(name);
-    response.json(category);
+    response.status(201).json(category);
   }
 
   async update(request, response) {
@@ -47,9 +43,7 @@ class CategoryController {
     const categoryExists = await CategoryRepository.findById(id);
 
     if (!categoryExists) {
-      return response
-        .status(404) // 404: Not found
-        .json({ error: 'Category not found' });
+      return response.status(404).json({ error: 'Category not found' });
     }
 
     const category = await CategoryRepository.update(id, name);
@@ -59,7 +53,7 @@ class CategoryController {
   async delete(request, response) {
     const { id } = request.params;
     await CategoryRepository.delete(id);
-    response.sendStatus(204); // 204: No Content
+    response.sendStatus(204);
   }
 }
 
