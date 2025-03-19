@@ -18,6 +18,7 @@ export default [
   {
     rules: {
       'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
+      'no-console': 'error',
     },
   },
   pluginJs.configs.recommended,
