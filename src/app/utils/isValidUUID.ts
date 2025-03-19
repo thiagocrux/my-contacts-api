@@ -1,8 +1,6 @@
-function isValidUUID(string) {
+export default function isValidUUID(input: string) {
   const regex =
     /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
 
-  return regex.test(string);
+  return regex.test(input);
 }
-
-module.exports = isValidUUID;

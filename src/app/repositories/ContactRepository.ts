@@ -1,10 +1,18 @@
-const db = require('../../database');
+import { query } from '../../database';
+
+interface Contact {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  category_id: string;
+}
 
 class ContactRepository {
   async findAll(orderBy = 'ASC') {
     const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
 
-    const rows = await db.query(
+    const rows = await query(
       `
         SELECT contacts.*, categories.name AS category_name
         FROM contacts
@@ -16,8 +24,8 @@ class ContactRepository {
     return rows;
   }
 
-  async findById(id) {
-    const [row] = await db.query(
+  async findById(id: string) {
+    const [row] = await query(
       `
         SELECT contacts.*, categories.name AS category_name
         FROM contacts
@@ -30,8 +38,8 @@ class ContactRepository {
     return row;
   }
 
-  async findByEmail(email) {
-    const [row] = await db.query(
+  async findByEmail(email: string) {
+    const [row] = await query(
       `
         SELECT * FROM contacts
         WHERE email = $1
@@ -42,8 +50,8 @@ class ContactRepository {
     return row;
   }
 
-  async create({ name, email, phone, category_id }) {
-    const [row] = await db.query(
+  async create({ name, email, phone, category_id }: Omit<Contact, 'id'>) {
+    const [row] = await query(
       `
         INSERT INTO contacts(name, email, phone, category_id)
         VALUES($1, $2, $3, $4)
@@ -55,8 +63,11 @@ class ContactRepository {
     return row;
   }
 
-  async update(id, { name, email, phone, category_id }) {
-    const [row] = await db.query(
+  async update(
+    id: string,
+    { name, email, phone, category_id }: Omit<Contact, 'id'>,
+  ) {
+    const [row] = await query(
       `
         UPDATE contacts
         SET name = $1, email = $2, phone = $3, category_id = $4
@@ -68,8 +79,8 @@ class ContactRepository {
     return row;
   }
 
-  async delete(id) {
-    const deleteOperation = await db.query(
+  async delete(id: string) {
+    const deleteOperation = await query(
       `
         DELETE FROM contacts
         WHERE id = $1
@@ -81,4 +92,4 @@ class ContactRepository {
   }
 }
 
-module.exports = new ContactRepository();
+export default new ContactRepository();

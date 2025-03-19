@@ -1,7 +1,15 @@
-module.exports = (request, response, next) => {
+import type { Request, Response, NextFunction } from 'express';
+
+export default function cors(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) {
   const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173'];
   const origin = request.header('Origin');
-  const isOriginAllowed = allowedOrigins.includes(origin);
+
+  const isOriginAllowed =
+    origin !== undefined && allowedOrigins.includes(origin);
 
   if (isOriginAllowed) {
     response.setHeader('Access-Control-Allow-Origin', origin);
@@ -11,4 +19,4 @@ module.exports = (request, response, next) => {
   }
 
   next();
-};
+}

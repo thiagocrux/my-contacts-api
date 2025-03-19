@@ -1,10 +1,10 @@
-const db = require('../../database');
+import { query } from '../../database';
 
 class CategoryRepository {
   async findAll(orderBy = 'ASC') {
     const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
 
-    const rows = await db.query(
+    const rows = await query(
       `
         SELECT * FROM categories
         ORDER BY name ${direction}
@@ -14,8 +14,8 @@ class CategoryRepository {
     return rows;
   }
 
-  async findById(id) {
-    const [row] = await db.query(
+  async findById(id: string) {
+    const [row] = await query(
       `
         SELECT * FROM categories
         WHERE id = $1
@@ -26,8 +26,8 @@ class CategoryRepository {
     return row;
   }
 
-  async findByName(name) {
-    const [row] = await db.query(
+  async findByName(name: string) {
+    const [row] = await query(
       `
         SELECT * FROM categories
         WHERE name = $1
@@ -38,8 +38,8 @@ class CategoryRepository {
     return row;
   }
 
-  async create(name) {
-    const [row] = await db.query(
+  async create(name: string) {
+    const [row] = await query(
       `
         INSERT INTO categories(name)
         VALUES($1)
@@ -51,8 +51,8 @@ class CategoryRepository {
     return row;
   }
 
-  async update(id, name) {
-    const [row] = await db.query(
+  async update(id: string, name: string) {
+    const [row] = await query(
       `
         UPDATE categories
         SET name = $1
@@ -65,8 +65,8 @@ class CategoryRepository {
     return row;
   }
 
-  async delete(id) {
-    const deleteOperation = await db.query(
+  async delete(id: string) {
+    const deleteOperation = await query(
       `
         DELETE FROM categories
         WHERE id = $1
@@ -78,4 +78,4 @@ class CategoryRepository {
   }
 }
 
-module.exports = new CategoryRepository();
+export default new CategoryRepository();

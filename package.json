@@ -4,8 +4,9 @@
   "description": "A contact application using Node.js and Express",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js"
+    "build": "rm -rf dist && tsc",
+    "start": "NODE_ENV=production tsx dist/index.js",
+    "dev": "NODE_ENV=development tsx watch src/index.ts"
   },
   "author": "Thiago Cruz",
   "license": "ISC",
@@ -16,9 +17,16 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.10",
+    "@types/pg": "^8.11.11",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "globals": "^16.0.0",
-    "prettier-eslint": "^16.3.0"
+    "prettier-eslint": "^16.3.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.1"
   }
 }

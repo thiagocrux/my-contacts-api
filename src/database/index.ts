@@ -1,4 +1,4 @@
-const { Client } = require('pg');
+import { Client } from 'pg';
 
 const client = new Client({
   host: 'localhost',
@@ -10,7 +10,7 @@ const client = new Client({
 
 client.connect();
 
-exports.query = async (query, values) => {
+export async function query(query: string, values?: string[]) {
   const { rows } = await client.query(query, values);
   return rows;
-};
+}
