@@ -6,7 +6,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    files: ['**/*.{js,ts,mjs,mts,cjs}'],
+    files: ['**/*.{js,ts,mjs,mts}'],
     languageOptions: {
       sourceType: 'commonjs',
       globals: globals.node,
