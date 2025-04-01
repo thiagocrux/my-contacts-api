@@ -1,12 +1,11 @@
 import globals from 'globals';
-import pluginJs from '@eslint/js';
+import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import eslintConfigPrettier from 'eslint-config-prettier';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    files: ['**/*.{js,ts,mjs,mts}'],
+    files: ['**/*.{js,mjs,cjs,ts}'],
     languageOptions: {
       sourceType: 'commonjs',
       globals: globals.node,
@@ -19,10 +18,9 @@ export default [
       'no-console': 'error',
     },
   },
-  pluginJs.configs.recommended,
+  js.configs.recommended,
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
-  eslintConfigPrettier,
   {
     ignores: ['node_modules/*', 'dist/*'],
   },
