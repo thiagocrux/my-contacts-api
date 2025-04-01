@@ -14,5 +14,5 @@ app.use(errorHandler);
 
 app.listen(3001, () =>
   // eslint-disable-next-line no-console
-  console.log(`🔥 Server started at http://localhost:3001`)
+  console.log(`Server started at http://localhost:3001`),
 );
