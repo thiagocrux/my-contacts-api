@@ -1,5 +1,5 @@
 {
-  "name": "my-contacts",
+  "name": "my-contacts-api",
   "version": "1.0.0",
   "description": "A contact application using Node.js and Express",
   "main": "src/index.js",
