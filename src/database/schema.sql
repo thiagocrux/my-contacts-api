@@ -1,4 +1,4 @@
-CREATE DATABASE mycontacts;
+CREATE DATABASE "my-contacts";
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
