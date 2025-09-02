@@ -1,5 +1,6 @@
 import express from 'express';
 import 'express-async-errors';
+import 'dotenv/config';
 
 import cors from './app/middlewares/cors';
 import errorHandler from './app/middlewares/errorHandler';
@@ -14,5 +15,5 @@ app.use(errorHandler);
 
 app.listen(3001, () =>
   // eslint-disable-next-line no-console
-  console.log(`Server started at http://localhost:3001`),
+  console.log(`Server started at http://localhost:3001`)
 );

@@ -24,10 +24,13 @@ _For more information about other dependencies, see the `package.json` file._
 
 Before installing and running this project, make sure you have the following:
 
-- **PostgreSQL**: You need to have PostgreSQL installed to run this project.
-  - The recommended way is to use Docker for easy setup and management.
-  - Alternatively, you can install PostgreSQL directly on your system using your package manager.
+- **Docker**: You must have Docker installed and configured on your computer.
+
+  - The recommended way to run PostgreSQL for this project is using Docker, which simplifies setup and management.
+  - If you do not have Docker, you will need to install PostgreSQL manually and execute the SQL queries found in `src/database/schema.sql` to set up the database schema.
+
 - **Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/).
+
 - **Package Manager**: You need a package manager for Node.js. This tutorial uses [pnpm](https://pnpm.io/), but you can use npm or yarn if you prefer.
 
 ## Installation
@@ -50,24 +53,46 @@ cd my-contacts-api
 pnpm install
 ```
 
-4. (Docker only) Enter the PostgreSQL container shell:
+4. Create a `.env` file in the root of the project and set the environment variables as described below:
 
-```sh
-docker exec -it <container_name> bash
+```bash
+# POSTGRES_DATABASE: The name of your PostgreSQL database.
+# The value you set here will be used by Docker Compose to create the database when the container starts,
+# and it will also be used by the application to connect to the database.
+POSTGRES_DATABASE="my_contacts"
+
+# POSTGRES_USER: The username for your PostgreSQL database.
+# Update as needed to match your database user.
+POSTGRES_USER="root"
+
+# POSTGRES_PASSWORD: The password for your PostgreSQL database.
+# Update as needed to match your database password.
+POSTGRES_PASSWORD="root"
+
+# POSTGRES_HOST: The host address for your PostgreSQL database.
+# Default is 'localhost', change if your database is hosted elsewhere.
+POSTGRES_HOST="localhost"
+
+# POSTGRES_HOST_PORT: The port on your host machine mapped to the PostgreSQL container.
+# Default PostgreSQL port is 5432, update if you use a different port.
+POSTGRES_HOST_PORT=5432
+
+# POSTGRES_CONTAINER_PORT: The port inside the PostgreSQL container.
+# Default PostgreSQL port is 5432, update if you use a different port.
+POSTGRES_CONTAINER_PORT=5432
 ```
 
-5. Create the database:
+5. Execute the command below to execute a PostgreSQL container and run the queries inside `src/database/schema.sql`:
 
-```sh
-psql -U root -d postgres -c 'CREATE DATABASE my_contacts;'
+```bash
+docker compose up -d
+
 ```
 
-6. Create the extension and tables:
+6. If you need to stop and remove the container, use:
 
-```sh
-psql -U root -d my_contacts -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'
-psql -U root -d my_contacts -c 'CREATE TABLE IF NOT EXISTS categories (id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(), name VARCHAR NOT NULL);'
-psql -U root -d my_contacts -c 'CREATE TABLE IF NOT EXISTS contacts (id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(), name VARCHAR NOT NULL, email VARCHAR UNIQUE, phone VARCHAR, category_id UUID, FOREIGN KEY(category_id) REFERENCES categories(id));'
+```bash
+docker compose down
 ```
 
 ## Available scripts
